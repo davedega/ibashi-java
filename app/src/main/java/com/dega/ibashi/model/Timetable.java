@@ -8,19 +8,19 @@ import java.util.List;
 
 public class Timetable {
 
-    @SerializedName("arrivals")
+    @SerializedName("arrivalDepartures")
     @Expose
-    private List<Arrival> arrivals = null;
+    private List<ArrivalDeparture> arrivalDepartures = null;
     @SerializedName("message")
     @Expose
     private String message;
 
-    public List<Arrival> getArrivals() {
-        return arrivals;
+    public List<ArrivalDeparture> getArrivalDepartures() {
+        return arrivalDepartures;
     }
 
-    public void setArrivals(List<Arrival> arrivals) {
-        this.arrivals = arrivals;
+    public void setArrivalDepartures(List<ArrivalDeparture> arrivalDepartures) {
+        this.arrivalDepartures = arrivalDepartures;
     }
 
     public String getMessage() {

@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">Ibashi</string>
+    <string name="direction">Berlin</string>
+    <string name="linecode">L007</string>
+    <string name="datetime">13:20</string>
+
+
+    <string name="last_update">Last update %1$s</string>
+    <string name="no_internet_connection">No Internet Connection</string>
+    <string name="expection_message">Ups something went wrong!</string>
+    <string name="not_found">Not Found</string>
+    <string name="try_again">Try again</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

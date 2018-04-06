@@ -3,4 +3,7 @@
     <color name="colorPrimary">#74D801</color>
     <color name="colorPrimaryDark">#31B601</color>
     <color name="colorAccent">#FDAB19</color>
+
+    <color name="ironside_gray">#6B6863</color>
+    <color name="dawn">#9F9C96</color>
 </resources>
