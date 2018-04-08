@@ -9,6 +9,7 @@ import com.dega.ibashi.model.Departure;
 import com.dega.ibashi.model.IbashiResponse;
 import com.dega.ibashi.model.Timetable;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,6 +33,8 @@ import static org.mockito.Mockito.when;
  * 1. Given an empty timetable, show no departures screen
  * 2. Given a filled timetable, show departures in a list
  * 3. Inform the user when there is not internet connection
+ * 4. Expect right time given specific timezone and time in milliseconds
+ *
  * <p>
  * Created by davedega on 06/04/18.
  */
@@ -64,10 +67,12 @@ public class IbashiPresenterTest {
         Timetable filledTimeTable = new Timetable();
 
         List<Departure> departures = new ArrayList<>();
-        departures.add(new Departure(new Datetime(1523195400, "GMT+02:00"), "L900", "Fráncfort (estación)"));
-        departures.add(new Departure(new Datetime(1523196000, "GMT+02:00"), "L006", "Berlín (estación)"));
-        departures.add(new Departure(new Datetime(1523196000, "GMT+06:00"), "L040", "Múnich (MUC aeropuerto)"));
-        departures.add(new Departure(new Datetime(1523196000, "GMT+02:00"), "L040", "Innsbruck"));
+
+        departures.add(new Departure(new Datetime(1523196000, "GMT+02:00"), "L900", "Fráncfort (estación)"));
+        departures.add(new Departure(new Datetime(1523196000, "GMT+03:00"), "L006", "Berlín (estación)"));
+        departures.add(new Departure(new Datetime(1523196000, "GMT+04:00"), "L040", "Múnich (MUC aeropuerto)"));
+        departures.add(new Departure(new Datetime(1523196000, "GMT+05:00"), "L040", "Innsbruck"));
+
 
         filledTimeTable.setArrivalDepartures(departures);
         validResponse.setTimetable(filledTimeTable);
@@ -109,5 +114,18 @@ public class IbashiPresenterTest {
                 .thenReturn(Observable.<IbashiResponse>error(new UnknownHostException("No internet!")));
         presenter.loadTimeTable();
         inOrder.verify(mView).showErrorMessage(R.string.no_internet_connection);
+    }
+    /**
+     * 4. Expect right time given specific timezone and time in milliseconds
+     ***/
+    @Test
+    public void expectedTime() {
+
+        final List<Departure> departures = validResponse.getTimetable().getArrivalDepartures();
+
+        Assert.assertEquals("17:06", TimeUtil.formatTime(departures.get(0).getDatetime()));
+        Assert.assertEquals("18:06", TimeUtil.formatTime(departures.get(1).getDatetime()));
+        Assert.assertEquals("19:06", TimeUtil.formatTime(departures.get(2).getDatetime()));
+        Assert.assertEquals("20:06", TimeUtil.formatTime(departures.get(3).getDatetime()));
     }
 }
