@@ -17,6 +17,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 
 /**
+ * This module provides references to the instances that we want to inject
  * Created by davedega on 06/04/18.
  */
 

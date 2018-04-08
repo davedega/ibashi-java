@@ -15,7 +15,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.dega.ibashi.model.Departure;
-import com.dega.ibashi.model.IbashiResponse;
 
 import java.text.DateFormat;
 import java.util.ArrayList;

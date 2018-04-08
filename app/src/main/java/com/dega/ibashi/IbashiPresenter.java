@@ -1,7 +1,5 @@
 package com.dega.ibashi;
 
-import android.util.Log;
-
 import com.dega.ibashi.api.ApiService;
 import com.dega.ibashi.infrastructure.schedulers.BaseSchedulerProvider;
 import com.dega.ibashi.model.Constants;
@@ -10,6 +8,8 @@ import com.dega.ibashi.model.IbashiResponse;
 
 import java.net.UnknownHostException;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import retrofit2.adapter.rxjava.HttpException;
 import rx.Observable;
@@ -21,19 +21,20 @@ import rx.Observer;
 
 public class IbashiPresenter implements IbashiContract.Presenter {
 
+    @Inject
+    ApiService apiService;
+
     // Replacement for AndroidSchedulers since it is not available on JUnit test environment
-    private BaseSchedulerProvider schedulerProvider;
+    @Inject
+    BaseSchedulerProvider schedulerProvider;
 
     // Communication to the view through the contract
     private IbashiContract.View view;
 
-    private ApiService apiService;
 
-
-    IbashiPresenter(ApiService apiService, BaseSchedulerProvider schedulerProvider, IbashiContract.View view) {
+    IbashiPresenter(IbashiContract.View view) {
         this.view = view;
-        this.schedulerProvider = schedulerProvider;
-        this.apiService = apiService;
+        App.getComponent().inject(this);
     }
 
 

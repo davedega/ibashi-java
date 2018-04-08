@@ -1,6 +1,5 @@
 package com.dega.ibashi.infrastructure;
 
-import com.dega.ibashi.IbashiActivity;
 import com.dega.ibashi.IbashiPresenter;
 
 import javax.inject.Singleton;
@@ -8,6 +7,8 @@ import javax.inject.Singleton;
 import dagger.Component;
 
 /**
+ * Determine which classes can be injected
+ *
  * Created by davedega on 06/04/18.
  */
 
@@ -15,7 +16,7 @@ import dagger.Component;
 @Component(modules = IbashiModule.class)
 public interface IbashiComponent {
 
-    void inject(IbashiActivity activity);
+    void inject(IbashiPresenter presenter);
 
 }
 

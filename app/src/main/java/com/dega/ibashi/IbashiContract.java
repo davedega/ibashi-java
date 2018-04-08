@@ -1,7 +1,6 @@
 package com.dega.ibashi;
 
 import com.dega.ibashi.model.Departure;
-import com.dega.ibashi.model.IbashiResponse;
 
 import java.util.List;
 

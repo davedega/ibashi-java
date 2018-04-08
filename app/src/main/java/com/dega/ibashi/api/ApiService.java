@@ -16,7 +16,6 @@ public class ApiService implements IbashiApi {
         this.api = retrofit.create(IbashiApi.class);
     }
 
-
     @Override
     public Observable<IbashiResponse> loadTimetable(String token) {
         return api.loadTimetable(token);
