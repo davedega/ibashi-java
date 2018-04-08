@@ -33,6 +33,13 @@ public class Departure {
     @Expose
     private String direction;
 
+
+    public Departure(Datetime datetime, String lineCode, String direction) {
+        this.datetime = datetime;
+        this.lineCode = lineCode;
+        this.direction = direction;
+    }
+
     public String getThroughTheStations() {
         return throughTheStations;
     }

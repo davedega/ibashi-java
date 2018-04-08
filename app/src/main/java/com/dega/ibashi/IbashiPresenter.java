@@ -37,6 +37,12 @@ public class IbashiPresenter implements IbashiContract.Presenter {
         App.getComponent().inject(this);
     }
 
+    IbashiPresenter(ApiService apiService, BaseSchedulerProvider mSchedulerProvider, IbashiContract.View mView) {
+        this.apiService = apiService;
+        this.schedulerProvider = mSchedulerProvider;
+        this.view = mView;
+    }
+
 
     @Override
     public void loadTimeTable() {

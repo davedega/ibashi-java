@@ -13,6 +13,10 @@ public class Datetime {
     @Expose
     private String tz;
 
+    public Datetime(Integer timestamp) {
+        this.timestamp = timestamp;
+    }
+
     public Integer getTimestamp() {
         return timestamp;
     }

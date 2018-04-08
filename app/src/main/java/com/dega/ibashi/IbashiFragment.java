@@ -95,7 +95,7 @@ public class IbashiFragment extends Fragment implements IbashiContract.View {
 
     @Override
     public void showEmptyList() {
-
+        //todo work together with UX/UI team to design and implement empty screen
     }
 
 
