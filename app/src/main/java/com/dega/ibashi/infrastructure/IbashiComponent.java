@@ -17,7 +17,6 @@ import dagger.Component;
 public interface IbashiComponent {
 
     void inject(IbashiPresenter presenter);
-
 }
 
 

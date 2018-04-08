@@ -13,8 +13,9 @@ public class Datetime {
     @Expose
     private String tz;
 
-    public Datetime(Integer timestamp) {
+    public Datetime(Integer timestamp, String tz) {
         this.timestamp = timestamp;
+        this.tz = tz;
     }
 
     public Integer getTimestamp() {

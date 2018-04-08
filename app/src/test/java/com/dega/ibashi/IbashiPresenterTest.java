@@ -64,10 +64,10 @@ public class IbashiPresenterTest {
         Timetable filledTimeTable = new Timetable();
 
         List<Departure> departures = new ArrayList<>();
-        departures.add(new Departure(new Datetime(1523195400), "L900", "Fráncfort (estación)"));
-        departures.add(new Departure(new Datetime(1523196000), "L006", "Berlín (estación)"));
-        departures.add(new Departure(new Datetime(1523196000), "L040", "Múnich (MUC aeropuerto)"));
-        departures.add(new Departure(new Datetime(1523196000), "L040", "Innsbruck"));
+        departures.add(new Departure(new Datetime(1523195400, "GMT+02:00"), "L900", "Fráncfort (estación)"));
+        departures.add(new Departure(new Datetime(1523196000, "GMT+02:00"), "L006", "Berlín (estación)"));
+        departures.add(new Departure(new Datetime(1523196000, "GMT+06:00"), "L040", "Múnich (MUC aeropuerto)"));
+        departures.add(new Departure(new Datetime(1523196000, "GMT+02:00"), "L040", "Innsbruck"));
 
         filledTimeTable.setArrivalDepartures(departures);
         validResponse.setTimetable(filledTimeTable);

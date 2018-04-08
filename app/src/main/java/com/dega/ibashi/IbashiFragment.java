@@ -98,7 +98,6 @@ public class IbashiFragment extends Fragment implements IbashiContract.View {
         //todo work together with UX/UI team to design and implement empty screen
     }
 
-
     // The Adapter lives within the view since is the only class who access it
     class TimetableAdapter extends RecyclerView.Adapter<TimetableAdapter.TimetableViewHolder> {
 
@@ -146,7 +145,7 @@ public class IbashiFragment extends Fragment implements IbashiContract.View {
             void setDeparture(Departure departure) {
                 this.linecode.setText(departure.getLineCode());
                 this.direction.setText(departure.getDirection());
-                this.datetime.setText(departure.getDatetime().getTimestamp().toString());
+                this.datetime.setText(TimeUtil.formatTime(departure.getDatetime()));
             }
         }
     }
