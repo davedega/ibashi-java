@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Ibashi</string>
+    <string name="direction">Berlin</string>
+    <string name="linecode">L007</string>
+    <string name="datetime">13:20</string>
+
+
+    <string name="last_update">Letzte aktualisierung %1$s</string>
+    <string name="no_internet_connection">keine Internetverbindung</string>
+    <string name="expection_message">Etwas ist schief gelaufen!</string>
+    <string name="not_found">Nicht gefunden</string>
+    <string name="try_again">Wiederholen</string>
+    <string name="loading">Wird geladen...</string>
+</resources>
