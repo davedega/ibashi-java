@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class ArrivalDeparture {
+public class Departure {
 
     @SerializedName("through_the_stations")
     @Expose

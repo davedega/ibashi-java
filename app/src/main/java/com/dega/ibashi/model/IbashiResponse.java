@@ -4,7 +4,7 @@ package com.dega.ibashi.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class IbashiModel {
+public class IbashiResponse {
 
     @SerializedName("timetable")
     @Expose

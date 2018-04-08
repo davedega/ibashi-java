@@ -10,15 +10,17 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.dega.ibashi.model.ArrivalDeparture;
-import com.dega.ibashi.model.IbashiModel;
+import com.dega.ibashi.model.Departure;
+import com.dega.ibashi.model.IbashiResponse;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -26,16 +28,20 @@ import java.util.Date;
  */
 public class IbashiFragment extends Fragment implements IbashiContract.View {
 
-    IbashiContract.Presenter presenter;
-    RecyclerView timeTableRV;
-    ImageView logoIV;
+    private IbashiContract.Presenter presenter;
+    private RecyclerView timeTableRV;
+    private LinearLayout loadingContainer;
+    private ProgressBar progressBar;
+    private TextView updateTextView;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_ibashi, container, false);
         timeTableRV = rootView.findViewById(R.id.timeTableRV);
-        logoIV = rootView.findViewById(R.id.logoIV);
+        loadingContainer = rootView.findViewById(R.id.loadingContainer);
+        progressBar = rootView.findViewById(R.id.progressBar);
+        updateTextView = rootView.findViewById(R.id.updateTextView);
         return rootView;
     }
 
@@ -46,13 +52,16 @@ public class IbashiFragment extends Fragment implements IbashiContract.View {
 
     @Override
     public void showErrorMessage(int string) {
-        logoIV.setVisibility(View.VISIBLE);
+        updateTextView.setVisibility(View.GONE);
+        progressBar.setVisibility(View.GONE);
         timeTableRV.setVisibility(View.GONE);
-        Snackbar mySnackbar = Snackbar.make(logoIV,
+        Snackbar mySnackbar = Snackbar.make(loadingContainer,
                 getString(string), Snackbar.LENGTH_SHORT);
         mySnackbar.setAction(R.string.try_again, new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                progressBar.setVisibility(View.VISIBLE);
+                updateTextView.setVisibility(View.VISIBLE);
                 presenter.loadTimeTable();
             }
         });
@@ -61,16 +70,18 @@ public class IbashiFragment extends Fragment implements IbashiContract.View {
     }
 
     @Override
-    public void showDepartures(IbashiModel ibashiModel) {
+    public void showDepartures(List<Departure> departures) {
         timeTableRV.setVisibility(View.VISIBLE);
-        logoIV.setVisibility(View.GONE);
+        loadingContainer.setVisibility(View.GONE);
+        progressBar.setVisibility(View.GONE);
+        updateTextView.setVisibility(View.GONE);
 
         LinearLayoutManager mLayoutManager = new
-                LinearLayoutManager(getActivity().getApplicationContext());
+                LinearLayoutManager(getActivity());
         timeTableRV.setLayoutManager(mLayoutManager);
 
         TimetableAdapter adapterTimeTable = new
-                TimetableAdapter(new ArrayList<>(ibashiModel.getTimetable().getArrivalDepartures()));
+                TimetableAdapter(departures);
 
         timeTableRV.setAdapter(adapterTimeTable);
     }
@@ -79,30 +90,35 @@ public class IbashiFragment extends Fragment implements IbashiContract.View {
     public void showLastUpdateTime() {
         Date date = new Date();
         String stringDate = DateFormat.getTimeInstance(DateFormat.SHORT).format(date);
-        Snackbar.make(logoIV,
+        Snackbar.make(loadingContainer,
                 getString(R.string.last_update, stringDate), Snackbar.LENGTH_LONG).show();
     }
+
+    @Override
+    public void showEmptyList() {
+
+    }
+
 
     // The Adapter lives within the view since is the only class who access it
     class TimetableAdapter extends RecyclerView.Adapter<TimetableAdapter.TimetableViewHolder> {
 
-        ArrayList<ArrivalDeparture> departures;
+        final ArrayList<Departure> departures;
 
-        TimetableAdapter(ArrayList<ArrivalDeparture> departures) {
-            this.departures = departures;
+        TimetableAdapter(List<Departure> departures) {
+            this.departures = new ArrayList<>(departures);
         }
 
         @Override
         public TimetableViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View root = LayoutInflater.from(getActivity().getApplicationContext()).
+            View root = LayoutInflater.from(getActivity()).
                     inflate(R.layout.item_timetable_departure, parent, false);
             return new TimetableViewHolder(root);
         }
 
         @Override
         public void onBindViewHolder(TimetableViewHolder holder, int position) {
-            ArrivalDeparture departure = departures.get(position);
-            holder.setDeparture(departure);
+            holder.setDeparture(departures.get(position));
         }
 
         @Override
@@ -110,23 +126,28 @@ public class IbashiFragment extends Fragment implements IbashiContract.View {
             return departures.size();
         }
 
+        @Override
+        public int getItemViewType(int position) {
+            return position;
+        }
+
         class TimetableViewHolder extends RecyclerView.ViewHolder {
 
-            TextView linecode;
-            TextView direction;
-            TextView datetime;
+            final TextView linecode;
+            final TextView direction;
+            final TextView datetime;
 
             TimetableViewHolder(View itemView) {
                 super(itemView);
-                this.linecode = itemView.findViewById(R.id.linecodeTV);
                 this.direction = itemView.findViewById(R.id.directionTV);
                 this.datetime = itemView.findViewById(R.id.daytimeTV);
+                this.linecode = itemView.findViewById(R.id.linecodeTV);
             }
 
-            void setDeparture(ArrivalDeparture departure) {
+            void setDeparture(Departure departure) {
                 this.linecode.setText(departure.getLineCode());
                 this.direction.setText(departure.getDirection());
-                this.datetime.setText(departure.getDatetime().getTimestamp());
+                this.datetime.setText(departure.getDatetime().getTimestamp().toString());
             }
         }
     }
